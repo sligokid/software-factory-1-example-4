@@ -1,0 +1,22 @@
+# Factory CI: checks, reviewer and preview, from the software factory's reusable workflow.
+# The product's commands live in .factory/factory.yaml; keep this file as it is.
+name: factory
+
+on:
+  push:
+    branches: [main, "feature/**"]
+  pull_request:
+    types: [ready_for_review, closed]
+
+concurrency:
+  group: factory-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: ${{ github.event_name == 'push' }}
+
+jobs:
+  factory:
+    uses: acme/software-factory/.github/workflows/product.yml@v1
+    secrets: inherit
+    permissions:
+      contents: read
+      packages: read
+      pull-requests: write
