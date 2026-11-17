@@ -1,0 +1,4 @@
+type: document
+id: hello
+title: hello world endpoint
+path: hello.md
